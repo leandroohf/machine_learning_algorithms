@@ -1,0 +1,6 @@
+
+
+* Intro to LDA
+
+  See notebook: [[file:2018-06-18-lhof-simulated_data.ipynb][LDA]]
+
