@@ -7,7 +7,7 @@
 
 * Intro to LDA and QDA
 
-  See notebook: [[file:.intro_lda.ipynb][LDA/QDA]]
+  See notebook: [[file:intro_lda.ipynb][LDA/QDA]]
 
 * Intro to PCA
 
