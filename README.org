@@ -4,7 +4,6 @@
 
   See notebook: [[file:intro_fishers_lda.ipynb][Fisher LDA]]
 
-
 * Intro to LDA and QDA
 
   See notebook: [[file:intro_lda.ipynb][LDA/QDA]]
