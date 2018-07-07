@@ -36,7 +36,7 @@
      2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread)
      3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
      4. \( u = A^{-1} (x - m)\)
-     5. \( \Psi = max(0, \frac{N-1}{N} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
+     5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
         
   Passso parafazer um reconhescmento com multiplos exemplos da mesma classe:
     
