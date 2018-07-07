@@ -18,7 +18,6 @@
   Lembre-se que: n = N/K e nao confundir com N o numero total de
   samples de todas as classes
 
-
   1. Fisher LDA part
      1. \(m = \frac{1}{N}\sum_i^N x_i\)
      2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
@@ -48,7 +47,6 @@
      1. calular: \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
      2. calcular: \( P(u| \bar{u^g} ) =  N(u| \frac{n\Psi}{n\Psi + I} \bar{u^g}, I + \frac{\Psi}}{n\Psi + I} ) \)
 
-        
 
   Lembre-se NOVAMENTE que: n = N/K e nao confundir com N o numero
   total de samples de todas as classes
