@@ -24,13 +24,17 @@
      3. \( S_w = \frca{1}{N}\sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
      4. \( S_b = \frca{1}{N}\sum_k n_k (m_k - m)(m_k - m)^t \)  betwee class spread
      5. \( W = S_w^1S_bS \)
-  2. Learning PLDA parameters
+  2. Generative model formulas
+     1. \( x = m + Au \)
+     2. \( u ~ N(x| v , I) \)
+     3. \( v ~ N(x| 0, \Psi ) \)
+  3. Learning PLDA parameters
      1. \( \Phi_w = \frac{N}{n-1} S_w\ \)
      2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \)
      3. the 2 equations above imply: \( \Psi_w + \Psi_b = S_w + S_b \) (depois
         verificar se isto eh igual \Phi de global covariance matrix)
      4. \( \Phi_b = A \Psi A^t \)
-  3. Predict with Probailistic LDA
+  4. Predict with Probailistic LDA
      1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread)
      2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread)
      3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
