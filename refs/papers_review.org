@@ -1,0 +1,153 @@
+
+* PLDA Sergey Ioffe 2006
+  :PROPERTIES:
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
+  :END:
+  
+  O artigo eh bastante pesado. Se vc quiser entender o porque das
+  coisas. Mas em termos de imlementacao eh complexo mas nen tanto. A
+  receita do algoritmo tem apenas 3 passos
+
+  https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
+  
+
+  Apenas listar as equacoes para entender o codigo:
+
+  Resume de formulas 
+
+  Lembre-se que: n = N/K e nao confundir com N o numero total de
+  samples de todas as classes
+
+
+  1. Fisher LDA part
+     1. \(m = \frac{1}{N}\sum_i^N x_i\)
+     2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
+     3. \( S_w = \frca{1}{N}\sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
+     4. \( S_b = \frca{1}{N}\sum_k n_k (m_k - m)(m_k - m)^t \)  betwee class spread
+     5. \( W = S_w^1S_bS \)
+  2. Learning PLDA parameters
+     1. \( \Phi_w = \frac{N}{n-1} S_w\ \)
+     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \)
+     3. the 2 equations above imply: \( \Psi_w + \Psi_b = S_w + S_b \) (depois
+        verificar se isto eh igual \Phi de global covariance matrix)
+     4. \( \Phi_b = A \Psi A^t \)
+  3. Predict with Probailistic LDA
+     1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread)
+     2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread)
+     3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
+     4. \( u = A^{-1} (x - m)\)
+     5. \( \Psi = max(0, \frac{N-1}{N} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
+        
+  Passso parafazer um reconhescmento com multiplos exemplos da mesma classe:
+    
+  1. Precisamos tranformar o inout x no subspace the u,v
+     1. Calcular \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
+     2. trabsformar o new data: \( u = A^{-1} (x - m)\)
+     3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
+  2. Calcular a probabilidade p(u,\bar{u^g})
+     1. calular: \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
+     2. calcular: \( P(u| \bar{u^g} ) =  N(u| \frac{n\Psi}{n\Psi + I} \bar{u^g}, I + \frac{\Psi}}{n\Psi + I} ) \)
+
+        
+
+  Lembre-se NOVAMENTE que: n = N/K e nao confundir com N o numero
+  total de samples de todas as classes
+
+
+  Assumptions q ateh agora eu consegui entender
+
+  1. All class has the same covariance matrix \( \Phi_w \)
+  2. n_k = n const: Each class has the same number of samples. Se nao
+     for o caso, ele diz que vc precisa reamostrar as classes para que
+     todas fiquem com o mesmo numero de sample
+
+
+  ATEH O MOMENTO EU SEI MAIS OU MENO COMO, OQ DEVO FAZER, MAS NAO
+  ENTENDO COMPLETAMENTE PORQUE ISTO FUNCIONA. COMO DEMONSTRAR AS
+  FORMULAS
+
+  PROXIMO PASSO ENTENDER COMO OS PARAMETROS SAO APRENDIDOS
+
+  UMA COISA LEGAL QUE VI NO PAPER eh medir a performance do algoritmo
+  qdo o numero de claases aumenta (se eu tuver 100 usuarios e se eu
+  tiver 100k usuario)
+
+  
+* Notes for page 1
+  :PROPERTIES:
+  :interleave_page_note: 1
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
+  :END:
+
+
+Motivations
+
+refs: https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf (abstract)
+
+1. Fisher LDA is common used in object recognition for feature extraction, but do not address the problem of how to use these features for recognition.
+2. latent variables of PLDA (PLDA components) represent both: the class of the object and the within variability  variability class of the object.
+3. Automatic give more wieght of the features with the most discriminativy power
+4. Can build a model of unseen class with only one example or  can combine multiple examples for a better representation of the class
+
+Application:
+
+   * Speaker recognition
+   * Face recogintion
+
+   We show applications to classification, hypothesis testing, class
+   inference, and clustering, on classes not observed during training.
+
+* Notes for page 2
+  :PROPERTIES:
+  :interleave_page_note: 2
+  :END:
+
+  
+LDA that he mentioned is Fisher's LDA. Can be used to discover the
+subsapce that maximizes the separability of the class. Maximize the
+ratio between variability class over the within variability class
+
+* Notes for page 3
+  :PROPERTIES:
+  :interleave_page_note: 3
+  :END:
+
+
+Ainda estou entendendo:
+
+
+the latent variable y: center of a mixture component and represent the
+class. Member of the same class share the same y.
+
+
+\(P(y) = \pi_k \delta(y - \mu_k)\) is the 
+
+m = global mean (definido na secao LDA)
+m_k = class mean
+
+\(\Phi_w\): common of all classes covariance matrix
+
+
+\(\Phi_b\): between class covariance matrix
+
+* Notes for page 5
+  :PROPERTIES:
+  :interleave_page_note: 5
+  :END:
+
+The between-class feature variance \(\Phi_t\) indicate how
+discriminative the features are !?
+
+* Notes for page 9
+  :PROPERTIES:
+  :interleave_page_note: 9
+  :END:
+
+
+Discussao da performance do algoritmo vs o numero de classes (individuos) na base de dados.
+
+
+Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
+
+Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
+

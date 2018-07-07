@@ -8,6 +8,10 @@
 
   See notebook: [[file:intro_lda.ipynb][LDA/QDA]]
 
+* Intro to Probabilistic LDA
+
+  *WIP*
+
 * Intro to PCA
 
 *TODO*
