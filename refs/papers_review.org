@@ -21,9 +21,9 @@
   1. Fisher LDA part
      1. \(m = \frac{1}{N}\sum_i^N x_i\)
      2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
-     3. \( S_w = \frca{1}{N}\sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
+     3. \( S_w = \frac{1}{N}\sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
      4. \( S_b = \frca{1}{N}\sum_k n_k (m_k - m)(m_k - m)^t \)  betwee class spread
-     5. \( W = S_w^1S_bS \)
+     5. \( W = S_w^{-1}S_b \)
   2. Generative model formulas
      1. \( x = m + Au \)
      2. \( u ~ N(x| v , I) \)
@@ -31,20 +31,20 @@
   3. Learning PLDA parameters
      1. \( \Phi_w = \frac{N}{n-1} S_w\ \)
      2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \)
-     3. the 2 equations above imply: \( \Psi_w + \Psi_b = S_w + S_b \) (depois
+     3. the 2 equations above imply: \( \Phi_w + \Phi_b = S_w + S_b \) (depois
         verificar se isto eh igual \Phi de global covariance matrix)
      4. \( \Phi_b = A \Psi A^t \)
   4. Predict with Probailistic LDA
      1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread)
      2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread)
-     3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
+     3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
      4. \( u = A^{-1} (x - m)\)
-     5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
+     5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n}) \)
         
   Passso parafazer um reconhescmento com multiplos exemplos da mesma classe:
     
   1. Precisamos tranformar o inout x no subspace the u,v
-     1. Calcular \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w right) \)^{\frac{1}{2}}
+     1. Calcular \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
      2. trabsformar o new data: \( u = A^{-1} (x - m)\)
      3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
   2. Calcular a probabilidade p(u,\bar{u^g})
@@ -73,7 +73,6 @@
   UMA COISA LEGAL QUE VI NO PAPER eh medir a performance do algoritmo
   qdo o numero de claases aumenta (se eu tuver 100 usuarios e se eu
   tiver 100k usuario)
-
   
 * Notes for page 1
   :PROPERTIES:
@@ -112,6 +111,7 @@ ratio between variability class over the within variability class
 * Notes for page 3
   :PROPERTIES:
   :interleave_page_note: 3
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
 
@@ -122,7 +122,8 @@ the latent variable y: center of a mixture component and represent the
 class. Member of the same class share the same y.
 
 
-\(P(y) = \pi_k \delta(y - \mu_k)\) is the 
+\(P(y) = \pi_k \delta(y - \mu_k)\) is the probability mass for each
+poitn. eu acho q eh um delta de kronecker
 
 m = global mean (definido na secao LDA)
 m_k = class mean
@@ -143,6 +144,7 @@ discriminative the features are !?
 * Notes for page 9
   :PROPERTIES:
   :interleave_page_note: 9
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
 
