@@ -26,10 +26,11 @@
      5. \( W = S_w^{-1}S_b \)
   2. Generative model formulas
      1. \( x = m + Au \)
-     2. \( u ~ N(x| v , I) \)
-     3. \( v ~ N(x| 0, \Psi ) \)
+     2. \( u \thicksim N(x| v , I) \): $u$ represents an example of that class in the projected space
+     3. \( y = m + Av \):  $v$ represents the class in the projected space
+     4. \( v \thicksim N(x| 0, \Psi ) \)
   3. Learning PLDA parameters
-     1. \( \Phi_w = \frac{N}{n-1} S_w\ \)
+     1. \( \Phi_w = \frac{n}{n-1} S_w\ \)
      2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \)
      3. the 2 equations above imply: \( \Phi_w + \Phi_b = S_w + S_b \) (depois
         verificar se isto eh igual \Phi de global covariance matrix)
@@ -48,8 +49,10 @@
      2. trabsformar o new data: \( u = A^{-1} (x - m)\)
      3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
   2. Calcular a probabilidade p(u,\bar{u^g})
-     1. calular: \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
-     2. calcular: \( P(u| \bar{u^g} ) =  N(u| \frac{n\Psi}{n\Psi + I} \bar{u^g}, I + \frac{\Psi}}{n\Psi + I} ) \)
+     1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
+     2. \(P(u|\bar{u^g})= N \left (u|\frac{n\Psi}{n\Psi+I} \bar{u^g},I+\frac{\Psi}}{n\Psi+I} \right) \)
+
+  
 
 
   Lembre-se NOVAMENTE que: n = N/K e nao confundir com N o numero
@@ -63,13 +66,13 @@
      for o caso, ele diz que vc precisa reamostrar as classes para que
      todas fiquem com o mesmo numero de sample
 
-
-  ATEH O MOMENTO EU SEI MAIS OU MENO COMO, OQ DEVO FAZER, MAS NAO
+     
+  ATEH O MOMENTO EU SEI MAIS OU MENOS COMO, OQ DEVO FAZER, MAS NAO
   ENTENDO COMPLETAMENTE PORQUE ISTO FUNCIONA. COMO DEMONSTRAR AS
   FORMULAS
 
   PROXIMO PASSO ENTENDER COMO OS PARAMETROS SAO APRENDIDOS
-
+  
   UMA COISA LEGAL QUE VI NO PAPER eh medir a performance do algoritmo
   qdo o numero de claases aumenta (se eu tuver 100 usuarios e se eu
   tiver 100k usuario)
@@ -140,6 +143,52 @@ m_k = class mean
 
 The between-class feature variance \(\Phi_t\) indicate how
 discriminative the features are !?
+
+* Notes for page 6
+  :PROPERTIES:
+  :interleave_page_note: 6
+  :END:
+
+
+Parameters to be learned:
+
+1. \(m \) : global mean !?
+2. \( \Psi \): the covariance matrix
+3. \( A \): The loading matrix or the equilvalent $Phi_w$ and $Phi_b$
+
+The log likelihood of the data: N trainning patterns separated by K classes ($n = N/K$):
+
+\( l(X={x^1....x^N}) = \sum_{k=1}^K ln P(x^i: i \in C_k)\) Nao confundir o N aqui com n
+
+
+where:
+
+\( P(x^1, x^2, ..., x^n) = \int N(y|0,\Phi_b)N(x^1|y,\Phi_w)...N(x^n|y,\Phi_w) dy\) aqui eh n minusculo mesmo
+
+
+You can solve the integral:
+
+
+\( l(X= {x^1...x^N}) =  -\frac{c}{2} \left ( ln|\Phi_b + \frac{1}{n}\Phi_w|) + tr((\Phi_b+\frac{1}{n}\Pgi_w)^{-1}S_b) + \)
+ \( + (n-1) ln|\Phi_w| + n tr(\Phi_w^{-1}S_w) \)
+
+We need maximize $l(X= {x^1...x^N})$ with respect to $\Phi_w$ and $\Phi_b$: 
+1. $\Phi_w$ being positive definite
+2. $\Phi_b$ being positive semi-definte 
+
+Oq eh uma matrix ser poisitive definite? 
+ 
+https://en.wikipedia.org/wiki/Positive-definite_matrix
+
+$M$ is said positive defnite if $zMz^T$ is positive scalar for no
+zeros columns in $z$. $z$ is a vector fo rela number
+
+AQui eh masi restritivo pois nao pode ter ZEROS
+
+Oq eh uma matrix ser poisitive semi-definite? 
+
+$M$ is said positive defnite if $zMz^T$ is positive or ZERO scalar for no
+zeros columns in $z$. $z$ is a vector fo rela number
 
 * Notes for page 9
   :PROPERTIES:
