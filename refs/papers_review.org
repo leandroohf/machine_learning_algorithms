@@ -9,51 +9,51 @@
   receita do algoritmo tem apenas 3 passos
 
   https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
-  
 
   Apenas listar as equacoes para entender o codigo:
-
+  
   Resume de formulas 
-
+  
   Lembre-se que: n = N/K e nao confundir com N o numero total de
   samples de todas as classes
-
+  
   1. Fisher LDA part
      1. \(m = \frac{1}{N}\sum_i^N x_i\)
      2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
-     3. \( S_w = \frac{1}{N}\sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
-     4. \( S_b = \frca{1}{N}\sum_k n_k (m_k - m)(m_k - m)^t \)  betwee class spread
+     3. \( S_w = \frac{1}{N} \sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
+     4. \( S_b = \frac{1}{N} \sum_k n_k (m_k - m)(m_k - m)^t \)  between class spread
      5. \( W = S_w^{-1}S_b \)
+     6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
   2. Generative model formulas
      1. \( x = m + Au \)
      2. \( u \thicksim N(x| v , I) \): $u$ represents an example of that class in the projected space
      3. \( y = m + Av \):  $v$ represents the class in the projected space
      4. \( v \thicksim N(x| 0, \Psi ) \)
   3. Learning PLDA parameters
-     1. \( \Phi_w = \frac{n}{n-1} S_w\ \)
-     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \)
-     3. the 2 equations above imply: \( \Phi_w + \Phi_b = S_w + S_b \) (depois
-        verificar se isto eh igual \Phi de global covariance matrix)
-     4. \( \Phi_b = A \Psi A^t \)
-  4. Predict with Probailistic LDA
-     1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread)
-     2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread)
-     3. \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
+     1. \( \Phi_w = \frac{n}{n-1} S_w\ \) IS NOT TRUE ANYMORE because of the constraints positive definite and semidefinite
+     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \) IS NOT TRUE ANYMORE because of the constraints positive definite and semidefinite
+     4. \( W S_t W^t  =  W S_w W^t +  W S_b W^t=  \Lambda_w + \Lambda_b = \Lambda_t\)  Conservacao do espalhamento dos dados.  DOUBLE check this eq to double check my unsderstanding
+     5. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $\tilde{x} = W^t x$  
+        see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
+     6. \( \Phi_b = A \Psi A^t \)
+     7. \( \Phi_w = A A^t \)
+  4. Predict with Probabilistic LDA
+     1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread or Just the transfored version of $S_b$)
+     2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread or Just the transfored version of $S_w$)
+     3. \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
      4. \( u = A^{-1} (x - m)\)
      5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n}) \)
         
-  Passso parafazer um reconhescmento com multiplos exemplos da mesma classe:
+  Passso parafazer um reconhescmento com multiplos exemplos da mesma
+  classe:
     
-  1. Precisamos tranformar o inout x no subspace the u,v
+  1. Precisamos transformar o input x no subspace the u,v
      1. Calcular \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
      2. trabsformar o new data: \( u = A^{-1} (x - m)\)
      3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
-  2. Calcular a probabilidade p(u,\bar{u^g})
+  2. Calcular a probabilidade \( p(u,\bar{u^g}) \)
      1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
      2. \(P(u|\bar{u^g})= N \left (u|\frac{n\Psi}{n\Psi+I} \bar{u^g},I+\frac{\Psi}}{n\Psi+I} \right) \)
-
-  
-
 
   Lembre-se NOVAMENTE que: n = N/K e nao confundir com N o numero
   total de samples de todas as classes
@@ -70,36 +70,59 @@
   ATEH O MOMENTO EU SEI MAIS OU MENOS COMO, OQ DEVO FAZER, MAS NAO
   ENTENDO COMPLETAMENTE PORQUE ISTO FUNCIONA. COMO DEMONSTRAR AS
   FORMULAS
-
-  PROXIMO PASSO ENTENDER COMO OS PARAMETROS SAO APRENDIDOS
   
   UMA COISA LEGAL QUE VI NO PAPER eh medir a performance do algoritmo
   qdo o numero de claases aumenta (se eu tuver 100 usuarios e se eu
   tiver 100k usuario)
+
+  LDA que ele se referece nao eh FIsher LDA , nao eh LDA que eu
+  estudei. Eh o LDA do artigo: 
+
+  Hastie, T., Tibshirani, R.: Discriminant analysis by Gaussian mixtures. Journal of the Royal
+  Statistical Society series B 58 (1996) 158–176
   
+  Que eh uma LDA (Nao eh a de Fisher), Onde no lugar de assumir uma
+  Gaussiana para cada classe, eh assumido uma mistura de Gaussianas 
+
+  Do Abstract
+
+  " LDA eh equivalente classificador da razao da maxima
+  verossimelhanca assumindo uma Gaussiana para cada classes. Neste
+  artigo ele ajusta uma istura de Gaussianas para cada classe. E isto
+  facilita a construcao de classificdores mais efetivos para classes
+  que seu dados nao sao normal ditribuidos, especificamnete qdo as
+  classes sao agrupadas (clusterized)"
+
 * Notes for page 1
   :PROPERTIES:
   :interleave_page_note: 1
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
+  Motivations
 
-Motivations
+  refs: https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf (abstract)
 
-refs: https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf (abstract)
-
-1. Fisher LDA is common used in object recognition for feature extraction, but do not address the problem of how to use these features for recognition.
-2. latent variables of PLDA (PLDA components) represent both: the class of the object and the within variability  variability class of the object.
-3. Automatic give more wieght of the features with the most discriminativy power
-4. Can build a model of unseen class with only one example or  can combine multiple examples for a better representation of the class
-
-Application:
+  1. Fisher LDA is common used in object recognition for feature
+     extraction, but do not address the problem of how to use these
+     features for recognition.
+  2. latent variables of PLDA (PLDA components) represent both: the
+     class of the object and the within variability variability class
+     of the object.
+  3. Automatic give more wieght of the features with the most
+     discriminativy power
+  4. Can build a model of unseen class with only one example or can
+     combine multiple examples for a better representation of the
+     class
+     
+   Application:
 
    * Speaker recognition
    * Face recogintion
 
    We show applications to classification, hypothesis testing, class
-   inference, and clustering, on classes not observed during training.
+   inference, and clustering, on classes not observed during
+   training.
 
 * Notes for page 2
   :PROPERTIES:
@@ -107,9 +130,9 @@ Application:
   :END:
 
   
-LDA that he mentioned is Fisher's LDA. Can be used to discover the
-subsapce that maximizes the separability of the class. Maximize the
-ratio between variability class over the within variability class
+  LDA that he mentioned is Fisher's LDA. Can be used to discover the
+  subsapce that maximizes the separability of the class. Maximize the
+  ratio between variability class over the within variability class
 
 * Notes for page 3
   :PROPERTIES:
@@ -117,78 +140,88 @@ ratio between variability class over the within variability class
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
+  Ainda estou entendendo:
 
-Ainda estou entendendo:
+  the latent variable y: center of a mixture component and represent the
+  class. Member of the same class share the same y.
 
+  \(P(y) = \pi_k \delta(y - \mu_k)\) is the probability mass for each
+  poitn. eu acho q eh um delta de kronecker
 
-the latent variable y: center of a mixture component and represent the
-class. Member of the same class share the same y.
+  m = global mean (definido na secao LDA)
+  m_k = class mean
 
+  \(\Phi_w\): common of all classes covariance matrix
 
-\(P(y) = \pi_k \delta(y - \mu_k)\) is the probability mass for each
-poitn. eu acho q eh um delta de kronecker
-
-m = global mean (definido na secao LDA)
-m_k = class mean
-
-\(\Phi_w\): common of all classes covariance matrix
-
-
-\(\Phi_b\): between class covariance matrix
+  \(\Phi_b\): between class covariance matrix
 
 * Notes for page 5
   :PROPERTIES:
   :interleave_page_note: 5
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
-The between-class feature variance \(\Phi_t\) indicate how
-discriminative the features are !?
+  The between-class feature variance \(\Phi_t\) indicate how
+  discriminative the features are !?
 
 * Notes for page 6
   :PROPERTIES:
   :interleave_page_note: 6
+  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
+  Oq sao os parametros $\Lambda_w$ e $\Lambda_b$ e qual
+  a relacao com $\Phi_w$ e $\Phi_b$? 
 
-Parameters to be learned:
+  
+  sao as matrizes de espalahemnto trasnformadas
+  
 
-1. \(m \) : global mean !?
-2. \( \Psi \): the covariance matrix
-3. \( A \): The loading matrix or the equilvalent $Phi_w$ and $Phi_b$
+  Parameters to be learned:
+  
+  1. \(m \) : global mean !?
+  2. \( \Psi \): the covariance matrix
+  3. \( A \): The loading matrix or the equilvalent $\Phi_w$ and $\Phi_b$
 
-The log likelihood of the data: N trainning patterns separated by K classes ($n = N/K$):
+  The log likelihood of the data: N trainning patterns separated by K classes ($n = N/K$):
 
-\( l(X={x^1....x^N}) = \sum_{k=1}^K ln P(x^i: i \in C_k)\) Nao confundir o N aqui com n
+  \( l(X={x^1....x^N}) = \sum_{k=1}^K ln P(x^i: i \in C_k)\) Nao confundir o N aqui com n
 
+  where:
 
-where:
+  \( P(x^1, x^2, ..., x^n) = \int N(y|0,\Phi_b)N(x^1|y,\Phi_w)...N(x^n|y,\Phi_w) dy\) aqui eh n minusculo mesmo
 
-\( P(x^1, x^2, ..., x^n) = \int N(y|0,\Phi_b)N(x^1|y,\Phi_w)...N(x^n|y,\Phi_w) dy\) aqui eh n minusculo mesmo
+  You can solve the integral:
 
+  \( l(X= {x^1...x^N}) =  -\frac{c}{2} \left ( ln|\Phi_b + \frac{1}{n}\Phi_w|) + tr((\Phi_b+\frac{1}{n}\Pgi_w)^{-1}S_b) + \)
+  \( + (n-1) ln|\Phi_w| + n tr(\Phi_w^{-1}S_w) \)
 
-You can solve the integral:
+  We need maximize $l(X= {x^1...x^N})$ with respect to $\Phi_w$ and $\Phi_b$: 
+  1. $\Phi_w$ being positive definite
+  2. $\Phi_b$ being positive semi-definte 
 
-
-\( l(X= {x^1...x^N}) =  -\frac{c}{2} \left ( ln|\Phi_b + \frac{1}{n}\Phi_w|) + tr((\Phi_b+\frac{1}{n}\Pgi_w)^{-1}S_b) + \)
- \( + (n-1) ln|\Phi_w| + n tr(\Phi_w^{-1}S_w) \)
-
-We need maximize $l(X= {x^1...x^N})$ with respect to $\Phi_w$ and $\Phi_b$: 
-1. $\Phi_w$ being positive definite
-2. $\Phi_b$ being positive semi-definte 
-
-Oq eh uma matrix ser poisitive definite? 
+  Oq eh uma matrix ser poisitive definite? 
  
-https://en.wikipedia.org/wiki/Positive-definite_matrix
+  https://en.wikipedia.org/wiki/Positive-definite_matrix
 
-$M$ is said positive defnite if $zMz^T$ is positive scalar for no
-zeros columns in $z$. $z$ is a vector fo rela number
+  $M$ is said positive defnite if $zMz^T$ is positive scalar for no
+  zeros columns in $z$. $z$ is a vector fo rela number
 
-AQui eh masi restritivo pois nao pode ter ZEROS
+  Aqui eh mais restritivo pois nao pode ter ZEROS
 
-Oq eh uma matrix ser poisitive semi-definite? 
+  Oq eh uma matrix ser poisitive semi-definite? 
+  
+  $M$ is said positive defnite if $zMz^T$ is positive or ZERO scalar for no
+  zeros columns in $z$. $z$ is a vector fo real number
+  
+  Whithout the 2 constraint above, simple calculation would result:
+  
+  REMEMBER, this equations \( \Phi_w = \frac{n}{n-1} S_w \), \(\Phi_b = S_b - \frac{1}{n-1} S_w  )\) are no true anymore (Double check that in the code)
 
-$M$ is said positive defnite if $zMz^T$ is positive or ZERO scalar for no
-zeros columns in $z$. $z$ is a vector fo rela number
+  1. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $y = W^t x$  
+        see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
+  2. \( \Phi_b = A \Psi A^t \)
+  3. \( \Phi_w = A A^t \)
 
 * Notes for page 9
   :PROPERTIES:
@@ -196,11 +229,10 @@ zeros columns in $z$. $z$ is a vector fo rela number
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
+  Discussao da performance do algoritmo vs o numero de classes
+  (individuos) na base de dados.
 
-Discussao da performance do algoritmo vs o numero de classes (individuos) na base de dados.
+  Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
 
-
-Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
-
-Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
+  Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
 
