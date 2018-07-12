@@ -1,7 +1,9 @@
 
+#+INTERLEAVE_PDF: Ioffe2006PLDA.pdf
+
 * PLDA Sergey Ioffe 2006
   :PROPERTIES:
-  :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
+  :INTERLEAVE_PDF: 
   :END:
   
   O artigo eh bastante pesado. Se vc quiser entender o porque das
@@ -216,12 +218,33 @@
   
   Whithout the 2 constraint above, simple calculation would result:
   
-  REMEMBER, this equations \( \Phi_w = \frac{n}{n-1} S_w \), \(\Phi_b = S_b - \frac{1}{n-1} S_w  )\) are no true anymore (Double check that in the code)
+  REMEMBER, this equations \( \Phi_w = \frac{n}{n-1} S_w \), \(\Phi_b = S_b - \frac{1}{n-1} S_w  \) are no true anymore (Double check that in the code)
 
   1. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $y = W^t x$  
         see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
   2. \( \Phi_b = A \Psi A^t \)
   3. \( \Phi_w = A A^t \)
+
+
+  =================================
+  Train model receipt
+  
+  \(n = N/K\) : K classes
+  Find parameters ( $m$, $A$ and $\Psi$ )that maximize the likelihood of PLDA: !? NAO sei qual eh a formula
+  
+  
+  1. Fishers LDA Steps
+     1. Compute $S_w$ and $S_b$
+     2. Compute W by solving the eigenvalue eigenvector problem: \(S_w^{-1}S_b w = \lambda w\)
+  2. Transform the scatter matrix
+     1. Comput: \( \Lambda_w \) and \( \Lambda_b \)
+  3. Update parameters
+     1. \( A = f(W,\Lambda_w) \)
+     2. \( \Psi = f(\Lambda_b, \Lambda_w) \)
+  4. Reduce dimensionality
+     1. keep $d'$  ($d' < d$)largest elements of $\Psi$ and set the rest to zero
+     2. $u = A^{-1}(x - m)$ use only the features corresponding to non-zero entries of $\Psi$
+
 
 * Notes for page 9
   :PROPERTIES:
