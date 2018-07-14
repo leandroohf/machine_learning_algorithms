@@ -1,23 +1,25 @@
 
 #+INTERLEAVE_PDF: Ioffe2006PLDA.pdf
 
+
+File better view with interleave mode (emacs tool)
+https://github.com/rudolfochrist/interleave
+
 * PLDA Sergey Ioffe 2006
   :PROPERTIES:
   :INTERLEAVE_PDF: 
   :END:
   
-  O artigo eh bastante pesado. Se vc quiser entender o porque das
-  coisas. Mas em termos de imlementacao eh complexo mas nen tanto. A
-  receita do algoritmo tem apenas 3 passos
-
+  The article is math heavy because he find an analytic solution. So
+  at least is easy to implement.
+  
   https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
 
-  Apenas listar as equacoes para entender o codigo:
   
-  Resume de formulas 
   
-  Lembre-se que: n = N/K e nao confundir com N o numero total de
-  samples de todas as classes
+  Summary of equations:
+  
+  Remember: $n = N/K$ where K is the number of class.
   
   1. Fisher LDA part
      1. \(m = \frac{1}{N}\sum_i^N x_i\)
@@ -27,26 +29,35 @@
      5. \( W = S_w^{-1}S_b \)
      6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
   2. Generative model formulas
-     1. \( x = m + Au \)
-     2. \( u \thicksim N(x| v , I) \): $u$ represents an example of that class in the projected space
-     3. \( y = m + Av \):  $v$ represents the class in the projected space
-     4. \( v \thicksim N(x| 0, \Psi ) \)
+     1. \( x = m + Au \): $x$ the input data. $u$ represents an example of that class in
+        the projected space and \( u \thicksim N(u \mid  v , I) \)
+     3. \( y = m + Av \): $y$ are the labels (assumed to be continuos)
+        $v$ represents the class in the projected space and \(
+        v \thicksim N(v \mid  0, \Psi ) \)
   3. Learning PLDA parameters
-     1. \( \Phi_w = \frac{n}{n-1} S_w\ \) IS NOT TRUE ANYMORE because of the constraints positive definite and semidefinite
-     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \) IS NOT TRUE ANYMORE because of the constraints positive definite and semidefinite
-     4. \( W S_t W^t  =  W S_w W^t +  W S_b W^t=  \Lambda_w + \Lambda_b = \Lambda_t\)  Conservacao do espalhamento dos dados.  DOUBLE check this eq to double check my unsderstanding
+     1. \( \Phi_w = \frac{n}{n-1} S_w\ \) IS TRUE (checked)
+     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \) IS  TRUE  checked
+     4. \( W S_t W^t  =  W S_w W^t +  W S_b W^t=  \Lambda_w + \Lambda_b = \Lambda_t\)  Conservacao do espalhamento dos dados.   It is True I checked
      5. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $\tilde{x} = W^t x$  
         see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
-     6. \( \Phi_b = A \Psi A^t \)
-     7. \( \Phi_w = A A^t \)
+     6. \( \Phi_b = A \Psi A^t \) this is true
+     7. \( \Phi_w = A A^t \) this is true
   4. Predict with Probabilistic LDA
      1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread or Just the transfored version of $S_b$)
      2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread or Just the transfored version of $S_w$)
      3. \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
      4. \( u = A^{-1} (x - m)\)
      5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n}) \)
-        
-  Passso parafazer um reconhescmento com multiplos exemplos da mesma
+  
+  Data space $(x,y)$ and projected/transformed space $(u,v)$: 
+  * \( (x_1,x_2) \to^A (u_1,u_2)  \)
+  * \( (x_1,x_2) \to^W (u_1,u_2) \) It is true. only the direction
+    might the oposite but if u is eigenvector, also -u so that is fine, I CHECKED
+  * \( y \to^A v \)
+  * \( P(x \mid y) =  N(x \mid y,\Phi_w) \to^A P(u \mid v) = N(u \mid v,I) \) Why?: \(  x = m + A u  \)
+  * \( P(y) =  N(y \mid m,\Phi_b) \to^A P(v) = N(v \mid 0,\Psi) \) Why?: \(  y = m + A v  \)
+  
+  Passos parafazer um reconhescmento com multiplos exemplos da mesma
   classe:
     
   1. Precisamos transformar o input x no subspace the u,v
@@ -55,18 +66,26 @@
      3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
   2. Calcular a probabilidade \( p(u,\bar{u^g}) \)
      1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
-     2. \(P(u|\bar{u^g})= N \left (u|\frac{n\Psi}{n\Psi+I} \bar{u^g},I+\frac{\Psi}}{n\Psi+I} \right) \)
-
-  Lembre-se NOVAMENTE que: n = N/K e nao confundir com N o numero
-  total de samples de todas as classes
+     2. \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
 
 
-  Assumptions q ateh agora eu consegui entender
+  Assumptions of PLDA:
 
-  1. All class has the same covariance matrix \( \Phi_w \)
-  2. n_k = n const: Each class has the same number of samples. Se nao
-     for o caso, ele diz que vc precisa reamostrar as classes para que
-     todas fiquem com o mesmo numero de sample
+  1. All classes are normal distributed: $P(x \mid y) = N(x \mid y,\Phi_w)$
+     where y is label
+  2. All class has the same covariance matrix \( \Phi_w \)
+  3. n_k = n const: Each class has the same number of samples. Case it
+     is not true, resample the class in order to have all class with
+     the same number of observations
+
+  The solution has the constraints:
+     1. $\Phi_w$ is positive defined
+     2. The priori $P(y) = N(y \mid 0,\Phi_b)$ is normal distributed
+     3. $\Phi_b$ is semi-positive defined
+        
+  There are some papers that proposed PLDA whithout the homodascity assumption:
+  https://www.superlectures.com/odyssey2014/exploring-some-limits-of-gaussian-plda-modeling-for-i-vector-distributions
+  https://www.cse.ust.hk/~yuzhangcse/papers/Zhang_Yeung_ECML09a.pdf
 
      
   ATEH O MOMENTO EU SEI MAIS OU MENOS COMO, OQ DEVO FAZER, MAS NAO
@@ -157,6 +176,9 @@
 
   \(\Phi_b\): between class covariance matrix
 
+  $y$ represent the class center and examples of the classes are drawn
+  form this distribution 
+
 * Notes for page 5
   :PROPERTIES:
   :interleave_page_note: 5
@@ -191,12 +213,12 @@
 
   where:
 
-  \( P(x^1, x^2, ..., x^n) = \int N(y|0,\Phi_b)N(x^1|y,\Phi_w)...N(x^n|y,\Phi_w) dy\) aqui eh n minusculo mesmo
+  \( P(x^1, x^2, ..., x^n) = \int N(y \mid 0,\Phi_b)N(x^1 \mid y,\Phi_w)...N(x^n \mid y,\Phi_w) dy\) aqui eh n minusculo mesmo
 
   You can solve the integral:
 
-  \( l(X= {x^1...x^N}) =  -\frac{c}{2} \left ( ln|\Phi_b + \frac{1}{n}\Phi_w|) + tr((\Phi_b+\frac{1}{n}\Pgi_w)^{-1}S_b) + \)
-  \( + (n-1) ln|\Phi_w| + n tr(\Phi_w^{-1}S_w) \)
+  \( l(X= {x^1...x^N}) =  -\frac{c}{2} \left ( ln \mid \Phi_b + \frac{1}{n}\Phi_w \mid ) + tr((\Phi_b+\frac{1}{n}\Pgi_w)^{-1}S_b) + \)
+  \( + (n-1) ln \mid \Phi_w \mid  + n tr(\Phi_w^{-1}S_w) \)
 
   We need maximize $l(X= {x^1...x^N})$ with respect to $\Phi_w$ and $\Phi_b$: 
   1. $\Phi_w$ being positive definite
@@ -217,8 +239,13 @@
   zeros columns in $z$. $z$ is a vector fo real number
   
   Whithout the 2 constraint above, simple calculation would result:
-  
-  REMEMBER, this equations \( \Phi_w = \frac{n}{n-1} S_w \), \(\Phi_b = S_b - \frac{1}{n-1} S_w  \) are no true anymore (Double check that in the code)
+
+  When I read the article I understood that is not true anymore. But I
+  double check it looks like is really true
+
+  REMEMBER, this equations \( \Phi_w = \frac{n}{n-1} S_w \), \(\Phi_b
+  = S_b - \frac{1}{n-1} S_w \) are +not+ true anymore (Checked. It is
+  true)
 
   1. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $y = W^t x$  
         see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
@@ -232,13 +259,15 @@
   \(n = N/K\) : K classes
   Find parameters ( $m$, $A$ and $\Psi$ )that maximize the likelihood of PLDA: !? NAO sei qual eh a formula
   
+  The paper found a analytic solution to the problem, so there is no
+  iterative algorithm. You just need to compute the parameters
   
   1. Fishers LDA Steps
      1. Compute $S_w$ and $S_b$
      2. Compute W by solving the eigenvalue eigenvector problem: \(S_w^{-1}S_b w = \lambda w\)
   2. Transform the scatter matrix
      1. Comput: \( \Lambda_w \) and \( \Lambda_b \)
-  3. Update parameters
+  3. Compute the parameters
      1. \( A = f(W,\Lambda_w) \)
      2. \( \Psi = f(\Lambda_b, \Lambda_w) \)
   4. Reduce dimensionality
@@ -246,6 +275,14 @@
      2. $u = A^{-1}(x - m)$ use only the features corresponding to non-zero entries of $\Psi$
 
 
+  About the data transformation: I believe the second equ is true
+  because of the highlighs.
+  1. \( (x_1,x_2) \to^A (u_1,u_2)  \)
+  2. \( (x_1,x_2) \to^W (u_1,u_2)  \) It is true
+
+
+  
+  
 * Notes for page 9
   :PROPERTIES:
   :interleave_page_note: 9
