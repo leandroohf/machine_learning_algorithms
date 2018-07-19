@@ -15,8 +15,6 @@ https://github.com/rudolfochrist/interleave
   
   https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
 
-  
-  
   Summary of equations:
   
   Remember: $n = N/K$ where K is the number of class.
@@ -68,7 +66,6 @@ https://github.com/rudolfochrist/interleave
      1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
      2. \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
 
-
   Assumptions of PLDA:
 
   1. All classes are normal distributed: $P(x \mid y) = N(x \mid y,\Phi_w)$
@@ -113,6 +110,28 @@ https://github.com/rudolfochrist/interleave
   facilita a construcao de classificdores mais efetivos para classes
   que seu dados nao sao normal ditribuidos, especificamnete qdo as
   classes sao agrupadas (clusterized)"
+
+
+  =================================
+  https://blog.csdn.net/JackyTintin/article/details/79803501
+  
+  Rascunho formulas desta pagina q pode me ajudar. Nela tem PLDA via EM algoritmo
+
+  Mas nao sei se batem com a solucao exata analitica. Preciso
+  confirmar se fazem sentido. No meu entendimento deve fazer
+
+  Se isto se confirmar serah um bom pto de verificacao se a implementacao estah correta
+  \(  
+  I = \Lambda_w^{-1/2}\Lambda_w \Lambda_w^{-1/2} = \Lambda_w^{-1/2} W^T \Phi_w W \Lambda_w^{-1/2}
+  \)
+
+  \( V = W \Lambda_w^{-1/2}  \)
+
+  \( V = W \Lambda_w^{-1/2}  \)
+
+  \( A^{-1} = V^T = \Lambda_w^{-1/2} W^T \)
+
+  
 
 * Notes for page 1
   :PROPERTIES:
@@ -295,4 +314,5 @@ https://github.com/rudolfochrist/interleave
   Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
 
   Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
+
 
