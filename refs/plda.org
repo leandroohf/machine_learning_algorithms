@@ -164,6 +164,16 @@ https://github.com/rudolfochrist/interleave
    inference, and clustering, on classes not observed during
    training.
 
+** Notes for page 2
+   :PROPERTIES:
+   :interleave_page_note: 2
+   :END:
+
+
+
+   The $S_b$ and $S_w$ is not the exact the same in Fishers LDA paper 
+   * $S_w$ the differnece is the normalization constant 1/N
+   * $S_b$ is the normalization constant 1/N and the term $n_k$
 * Notes for page 2
   :PROPERTIES:
   :interleave_page_note: 2
