@@ -124,17 +124,6 @@ https://github.com/rudolfochrist/interleave
   Mas nao sei se batem com a solucao exata analitica. Preciso
   confirmar se fazem sentido. No meu entendimento deve fazer
 
-  Se isto se confirmar serah um bom pto de verificacao se a implementacao estah correta
-  \(  
-  I = \Lambda_w^{-1/2}\Lambda_w \Lambda_w^{-1/2} = \Lambda_w^{-1/2} W^T \Phi_w W \Lambda_w^{-1/2}
-  \)
-
-  \( V = W \Lambda_w^{-1/2}  \)
-
-  \( A^{-1} = V^T = \Lambda_w^{-1/2} W^T \)
-
-  \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
-  
 
 * Notes for page 1
   :PROPERTIES:
@@ -167,20 +156,14 @@ https://github.com/rudolfochrist/interleave
    inference, and clustering, on classes not observed during
    training.
 
-** Notes for page 2
-   :PROPERTIES:
-   :interleave_page_note: 2
-   :END:
-
-
-
-   The $S_b$ and $S_w$ is not the exact the same in Fishers LDA paper 
-   * $S_w$ the differnece is the normalization constant 1/N
-   * $S_b$ is the normalization constant 1/N and the term $n_k$
 * Notes for page 2
   :PROPERTIES:
   :interleave_page_note: 2
   :END:
+
+  The $S_b$ and $S_w$ is not the exact the same in Fishers LDA paper 
+   * $S_w$ the differnece is the normalization constant 1/N
+   * $S_b$ is the normalization constant 1/N and the term $n_k$
 
   
   LDA that he mentioned is Fisher's LDA. Can be used to discover the
@@ -218,7 +201,7 @@ https://github.com/rudolfochrist/interleave
   :END:
 
   The between-class feature variance \(\Phi_t\) indicate how
-  discriminative the features are !?
+  discriminative the features are.
 
 * Notes for page 6
   :PROPERTIES:
@@ -229,7 +212,6 @@ https://github.com/rudolfochrist/interleave
   Oq sao os parametros $\Lambda_w$ e $\Lambda_b$ e qual
   a relacao com $\Phi_w$ e $\Phi_b$? 
 
-  
   sao as matrizes de espalahemnto trasnformadas
   
 
@@ -313,7 +295,6 @@ https://github.com/rudolfochrist/interleave
   2. \( (x_1,x_2) \to^W (u_1,u_2)  \) It is true
 
 
-  
   
 * Notes for page 9
   :PROPERTIES:
