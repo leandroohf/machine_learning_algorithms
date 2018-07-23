@@ -24,7 +24,9 @@ https://github.com/rudolfochrist/interleave
      2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
      3. \( S_w = \frac{1}{N} \sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
      4. \( S_b = \frac{1}{N} \sum_k n_k (m_k - m)(m_k - m)^t \)  between class spread
-     5. \( W = S_w^{-1}S_b \)
+     5. \( S_b w = \lambda S_w w \) Generalized generalized eigenvalue
+        problem. But in this case we add the restriction that *Sw is
+        positive defined*
      6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
   2. Generative model formulas
      1. \( x = m + Au \): $x$ the input data. $u$ represents an example of that class in
@@ -71,9 +73,11 @@ https://github.com/rudolfochrist/interleave
   1. All classes are normal distributed: $P(x \mid y) = N(x \mid y,\Phi_w)$
      where y is label
   2. All class has the same covariance matrix \( \Phi_w \)
-  3. n_k = n const: Each class has the same number of samples. Case it
-     is not true, resample the class in order to have all class with
-     the same number of observations
+  3. For Analytic solution
+     * n_k = n const: Each class has the same number of samples. Case
+       it is not true, resample the class in order to have all class
+       with the same number of observations
+  4. For EM solution does not have previous restriction
 
   The solution has the constraints:
      1. $\Phi_w$ is positive defined
@@ -127,10 +131,9 @@ https://github.com/rudolfochrist/interleave
 
   \( V = W \Lambda_w^{-1/2}  \)
 
-  \( V = W \Lambda_w^{-1/2}  \)
-
   \( A^{-1} = V^T = \Lambda_w^{-1/2} W^T \)
 
+  \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
   
 
 * Notes for page 1
