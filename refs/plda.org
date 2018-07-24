@@ -124,7 +124,6 @@ https://github.com/rudolfochrist/interleave
   Mas nao sei se batem com a solucao exata analitica. Preciso
   confirmar se fazem sentido. No meu entendimento deve fazer
 
-
 * Notes for page 1
   :PROPERTIES:
   :interleave_page_note: 1
@@ -294,8 +293,6 @@ https://github.com/rudolfochrist/interleave
   1. \( (x_1,x_2) \to^A (u_1,u_2)  \)
   2. \( (x_1,x_2) \to^W (u_1,u_2)  \) It is true
 
-
-  
 * Notes for page 9
   :PROPERTIES:
   :interleave_page_note: 9
@@ -308,5 +305,4 @@ https://github.com/rudolfochrist/interleave
   Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
 
   Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
-
 
