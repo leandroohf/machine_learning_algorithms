@@ -4,7 +4,7 @@
 * Notes aout PLDA n face recognition 
   
 
-  * 
+
   
 * Notes for page 2
   :PROPERTIES:
