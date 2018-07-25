@@ -87,11 +87,6 @@ https://github.com/rudolfochrist/interleave
   There are some papers that proposed PLDA whithout the homodascity assumption:
   https://www.superlectures.com/odyssey2014/exploring-some-limits-of-gaussian-plda-modeling-for-i-vector-distributions
   https://www.cse.ust.hk/~yuzhangcse/papers/Zhang_Yeung_ECML09a.pdf
-
-     
-  ATEH O MOMENTO EU SEI MAIS OU MENOS COMO, OQ DEVO FAZER, MAS NAO
-  ENTENDO COMPLETAMENTE PORQUE ISTO FUNCIONA. COMO DEMONSTRAR AS
-  FORMULAS
   
   UMA COISA LEGAL QUE VI NO PAPER eh medir a performance do algoritmo
   qdo o numero de claases aumenta (se eu tuver 100 usuarios e se eu
