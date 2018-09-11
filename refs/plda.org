@@ -2,9 +2,9 @@
 #+INTERLEAVE_PDF: Ioffe2006PLDA.pdf
 
 
-File better view with interleave mode (emacs tool)
-https://github.com/rudolfochrist/interleave
-
+   File better view with interleave mode (emacs tool)
+   https://github.com/rudolfochrist/interleave
+   
 * PLDA Sergey Ioffe 2006
   :PROPERTIES:
   :INTERLEAVE_PDF: 
@@ -15,58 +15,31 @@ https://github.com/rudolfochrist/interleave
   
   https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
 
-  Summary of equations:
-  
-  Remember: $n = N/K$ where K is the number of class.
-  
-  1. Fisher LDA part
-     1. \(m = \frac{1}{N}\sum_i^N x_i\)
-     2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
-     3. \( S_w = \frac{1}{N} \sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
-     4. \( S_b = \frac{1}{N} \sum_k n_k (m_k - m)(m_k - m)^t \)  between class spread
-     5. \( S_b w = \lambda S_w w \) Generalized generalized eigenvalue
-        problem. But in this case we add the restriction that *Sw is
-        positive defined*
-     6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
-  2. Generative model formulas
-     1. \( x = m + Au \): $x$ the input data. $u$ represents an example of that class in
-        the projected space and \( u \thicksim N(u \mid  v , I) \)
-     3. \( y = m + Av \): $y$ are the labels (assumed to be continuos)
-        $v$ represents the class in the projected space and \(
-        v \thicksim N(v \mid  0, \Psi ) \)
-  3. Learning PLDA parameters
-     1. \( \Phi_w = \frac{n}{n-1} S_w\ \) IS TRUE (checked)
-     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \) IS  TRUE  checked
-     4. \( W S_t W^t  =  W S_w W^t +  W S_b W^t=  \Lambda_w + \Lambda_b = \Lambda_t\)  Conservacao do espalhamento dos dados.   It is True I checked
-     5. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $\tilde{x} = W^t x$  
-        see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
-     6. \( \Phi_b = A \Psi A^t \) this is true
-     7. \( \Phi_w = A A^t \) this is true
-  4. Predict with Probabilistic LDA
-     1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread or Just the transfored version of $S_b$)
-     2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread or Just the transfored version of $S_w$)
-     3. \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
-     4. \( u = A^{-1} (x - m)\)
-     5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n}) \)
-  
-  Data space $(x,y)$ and projected/transformed space $(u,v)$: 
-  * \( (x_1,x_2) \to^A (u_1,u_2)  \)
-  * \( (x_1,x_2) \to^W (u_1,u_2) \) It is true. only the direction
-    might the oposite but if u is eigenvector, also -u so that is fine, I CHECKED
-  * \( y \to^A v \)
-  * \( P(x \mid y) =  N(x \mid y,\Phi_w) \to^A P(u \mid v) = N(u \mid v,I) \) Why?: \(  x = m + A u  \)
-  * \( P(y) =  N(y \mid m,\Phi_b) \to^A P(v) = N(v \mid 0,\Psi) \) Why?: \(  y = m + A v  \)
-  
-  Passos parafazer um reconhescmento com multiplos exemplos da mesma
+
+** Big picture 
+   
+   Supervised learning algorithm
+
+   Main motivations. 
+   * PLDA automatic set set dimension with less importance with low
+     probabilities
+   * Can be used to do classification with unseen classes (Train with
+     class apple, orange n grape and latter on you decide to add the
+     class rapsberry)
+   * Like LDA, tranform the features in a new space with more
+     discriminative power
+
+  Passos para fazer um reconhescmento com multiplos exemplos da mesma
   classe:
     
   1. Precisamos transformar o input x no subspace the u,v
      1. Calcular \( A = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
-     2. trabsformar o new data: \( u = A^{-1} (x - m)\)
+     2. transformar o new data: \( u = A^{-1} (x - m)\)
      3. average tranformed samples of the target class: \(\bar{u^g} = \frac{1}{n} \sum_i^{n} u_k^g\)
   2. Calcular a probabilidade \( p(u,\bar{u^g}) \)
      1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
      2. \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
+
 
   Assumptions of PLDA:
 
@@ -118,6 +91,74 @@ https://github.com/rudolfochrist/interleave
 
   Mas nao sei se batem com a solucao exata analitica. Preciso
   confirmar se fazem sentido. No meu entendimento deve fazer
+
+** Summary of equations:
+  
+  Remember: $n = N/K$ where K is the number of class.
+  
+  1. Fisher LDA part
+     1. \(m = \frac{1}{N}\sum_i^N x_i\)
+     2. \( n_k = n  \equiv N\k  \) onde K eh o numero de classes
+     3. \( S_w = \frac{1}{N} \sum_k \sum_{i \in C_k} (x_i - m_k)(x_i-m_k)^t \) within class spread
+     4. \( S_b = \frac{1}{N} \sum_k n_k (m_k - m)(m_k - m)^t \)  between class spread
+     5. \( S_b w = \lambda S_w w \) Generalized generalized eigenvalue
+        problem. But in this case we add the restriction that *Sw is
+        positive defined*
+     6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
+  2. Generative model formulas
+     1. \( x = m + Au \): $x$ the input data. $u$ represents an example of that class in
+        the projected space and \( u \thicksim N(u \mid  v , I) \)
+     3. \( y = m + Av \): $y$ are the labels (assumed to be continuos)
+        $v$ represents the class in the projected space and \(
+        v \thicksim N(v \mid  0, \Psi ) \)
+  3. Learning PLDA parameters
+     1. \( \Phi_w = \frac{n}{n-1} S_w\ \) IS TRUE (checked)
+     2. \( \Phi_b = S_b - \frac{1}{n-1} S_w \) IS  TRUE  checked
+     4. \( W S_t W^t  =  W S_w W^t +  W S_b W^t=  \Lambda_w + \Lambda_b = \Lambda_t\)  Conservacao do espalhamento dos dados.   It is True I checked
+     5. $W$ solve the generalized eigenvector eigenvalue problem $S_bW = \lambda S_w W$. So $S_w^{-1}S_b w = \lambda w$ and $\tilde{x} = W^t x$  
+        see pdf: [[file:Elhabian_LDA09.pdf]] and see [[file:../intro_fishers_lda.ipynb]]
+     6. \( \Phi_b = A \Psi A^t \) this is true
+     7. \( \Phi_w = A A^t \) this is true
+  4. Predict with Probabilistic LDA
+     1. \( \Lambda_b = W^tS_b W \) (diagnolized between class spread or Just the transfored version of $S_b$)
+     2. \( \Lambda_w = W^tS_w W \) (diagnolized within class spread or Just the transfored version of $S_w$)
+     3. \( A  = W^{-t} \left ( \frac{n}{n-1} \Lambda_w \right)^{\frac{1}{2}} \)
+     4. \( u = A^{-1} (x - m)\)
+     5. \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n}) \)
+  
+  Data space $(x,y)$ and projected/transformed space $(u,v)$: 
+  * \( (x_1,x_2) \to^A (u_1,u_2)  \)
+  * \( (x_1,x_2) \to^W (u_1,u_2) \) It is true. only the direction
+    might the oposite but if u is eigenvector, also -u so that is fine, I CHECKED
+  * \( y \to^A v \)
+  * \( P(x \mid y) =  N(x \mid y,\Phi_w) \to^A P(u \mid v) = N(u \mid v,I) \) Why?: \(  x = m + A u  \)
+  * \( P(y) =  N(y \mid m,\Phi_b) \to^A P(v) = N(v \mid 0,\Psi) \) Why?: \(  y = m + A v  \)
+  
+** Using PLDA (doing predictions)
+
+   * Task classification: 
+
+     We know the new (probe) examples $x^p$ is one of the M classes
+     used in training $(x^1, ..., x^M)$
+
+     1. For each class in training data ($g = 1, ..., M$) (Ex: a speaker in ASR), compute the likelihood of the new data and the class $g$:
+        
+        \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
+        
+        \bar{u^g} is the mean of all sample of the training class $g$. (mean of all utterance of a speaker). This improve performance. Better than use one example
+
+     2. Return the class $g$ with the maximum likelihood value
+   
+   * Task Hypothesis testing: NEED to undertand better the Eq
+     
+     I think this one is used in the ivector paper n xvector paper about ASR
+     
+     Given to unseen classes (Ex: 2 speakers that was not in the
+     training phase), we need to determine wheter they belong to the
+     same class.
+
+     \(R(\{u^p_{1, ..., m}\},\{u^g_{1, ..., n}\}) = \frac{likelihood(same)}{likelihood(diff)} \) 
+     \(R(\{u^p_{1, ..., m}\},\{u^g_{1, ..., n}\}) = \frac{P(u^p_{1, ..., m},u^g_{1, ..., n})}{P(u^p_{1, ..., m})P(u^p_{1, ..., m})} \) 
 
 * Notes for page 1
   :PROPERTIES:

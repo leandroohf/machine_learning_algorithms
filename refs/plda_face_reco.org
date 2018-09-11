@@ -2,10 +2,6 @@
 #+INTERLEAVE_PDF: Probabilistic_Linear_Discriminant_Analys.pdf
 
 * Notes aout PLDA n face recognition 
-  
-
-
-  
 * Notes for page 2
   :PROPERTIES:
   :interleave_page_note: 2
@@ -49,7 +45,6 @@
 
     \(P(w_{ij}) = N(w \mid 0,I) \)
     
-
 * Notes for page 3
   :PROPERTIES:
   :interleave_page_note: 3
