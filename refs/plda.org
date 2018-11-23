@@ -1,7 +1,6 @@
 
 #+INTERLEAVE_PDF: Ioffe2006PLDA.pdf
 
-
    File better view with interleave mode (emacs tool)
    https://github.com/rudolfochrist/interleave
    
@@ -15,8 +14,7 @@
   
   https://ravisoji.com/assets/papers/Ioffe2006PLDA.pdf
 
-
-** Big picture 
+** Big picture
    
    Supervised learning algorithm
 
