@@ -8,13 +8,13 @@
 
   See notebook: [[file:intro_lda.ipynb][LDA/QDA]]
 
+* Intro to PCA
+
+  See notebook: [[file:intor_pca.ipynb][PCA]]
+
 * Intro to Probabilistic LDA
 
   *WIP*
-
-* Intro to PCA
-
-*TODO*
 
 * Intro to t_SNE
 
