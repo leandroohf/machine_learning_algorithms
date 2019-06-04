@@ -23,9 +23,9 @@
      probabilities
    * Can be used to do classification with unseen classes (Train with
      class apple, orange n grape and latter on you decide to add the
-     class rapsberry)
-   * Like LDA, tranform the features in a new space with more
-     discriminative power
+     class raspberry)
+   * Like LDA, transform the features in a new space with more discriminative
+     power
 
   Passos para fazer um reconhescmento com multiplos exemplos da mesma
   classe:
@@ -37,6 +37,18 @@
   2. Calcular a probabilidade \( p(u,\bar{u^g}) \)
      1.  \( \Psi = max(0, \frac{n-1}{n} (\Lambda_b/\Lambda_w) - \frac{1}{n})\)
      2. \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
+
+
+  * Transformation summary
+    
+    | Tranformation                     | comment                                                        |
+    |-----------------------------------+----------------------------------------------------------------|
+    | \( u = A^{-1} (x - m) \)          | points are transformed into the new subsapce with A^{-1}       |
+    | \( v = A^{-1} (y - m) \)          | same for the centroid of the classes                           |
+    |-----------------------------------+----------------------------------------------------------------|
+    | \( I = A^{-1} \Phi_w A^{-t}\)     | The tranformed within matrix is uncorrelated and unit variance |
+    | \( \Psi  = A^{-1} \Phi_b A^{-t}\) | \Psi is the transformed between covariance matrix              |
+    |-----------------------------------+----------------------------------------------------------------|
 
 
   Assumptions of PLDA:
@@ -76,7 +88,7 @@
 
   " LDA eh equivalente classificador da razao da maxima
   verossimelhanca assumindo uma Gaussiana para cada classes. Neste
-  artigo ele ajusta uma istura de Gaussianas para cada classe. E isto
+  artigo ele ajusta uma mistura de Gaussianas para cada classe. E isto
   facilita a construcao de classificdores mais efetivos para classes
   que seu dados nao sao normal ditribuidos, especificamnete qdo as
   classes sao agrupadas (clusterized)"
@@ -103,6 +115,15 @@
         problem. But in this case we add the restriction that *Sw is
         positive defined*
      6. $S_t = \sum_{j=1}^{N}(x_j - m)(x_j - m)^t$ is the total scatter matrix 
+        
+
+  | Fisher LDA            | PLDA              | Comment                                        |
+  |-----------------------+-------------------+------------------------------------------------|
+  | \( S_k \)             | \( \Phi_k \)      | covariance matrix                              |
+  | \( \frac{1}{N - 1} \) | \( \frac{1}{N} \) | const to convert covariance into spread matrix |
+  | \( \Sigma_k \)        | \( S_k \)         | scatter or spread  matrix                      |
+  |-----------------------+-------------------+------------------------------------------------|
+
   2. Generative model formulas
      1. \( x = m + Au \): $x$ the input data. $u$ represents an example of that class in
         the projected space and \( u \thicksim N(u \mid  v , I) \)
@@ -143,7 +164,7 @@
         
         \( P(u \mid \bar{u^g})= N \left (u \mid \frac{n \Psi}{ n \Psi+I} \bar{u^g},I+\frac{\Psi}}{n \Psi + I} \right) \)
         
-        \bar{u^g} is the mean of all sample of the training class $g$. (mean of all utterance of a speaker). This improve performance. Better than use one example
+        $\bar{u^g}$ is the mean of all sample of the training class $g$. (mean of all utterance of a speaker). This improve performance. Better than use one example
 
      2. Return the class $g$ with the maximum likelihood value
    
@@ -209,7 +230,7 @@
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
-  Ainda estou entendendo:
+  I am still trying to understand:
 
   the latent variable y: center of a mixture component and represent the
   class. Member of the same class share the same y.
@@ -241,26 +262,22 @@
   :interleave_page_note: 6
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
-
-  Oq sao os parametros $\Lambda_w$ e $\Lambda_b$ e qual
-  a relacao com $\Phi_w$ e $\Phi_b$? 
-
-  sao as matrizes de espalahemnto trasnformadas
   
 
   Parameters to be learned:
   
   1. \(m \) : global mean !?
   2. \( \Psi \): the covariance matrix
-  3. \( A \): The loading matrix or the equilvalent $\Phi_w$ and $\Phi_b$
+  3. \( A \): The loading matrix or the equivalent $\Phi_w$ and $\Phi_b$
 
   The log likelihood of the data: N trainning patterns separated by K classes ($n = N/K$):
 
-  \( l(X={x^1....x^N}) = \sum_{k=1}^K ln P(x^i: i \in C_k)\) Nao confundir o N aqui com n
+  \( l(X={x^1....x^N}) = \sum_{k=1}^K ln P(x^i: i \in C_k)\) Do not mix N with n here
 
   where:
 
-  \( P(x^1, x^2, ..., x^n) = \int N(y \mid 0,\Phi_b)N(x^1 \mid y,\Phi_w)...N(x^n \mid y,\Phi_w) dy\) aqui eh n minusculo mesmo
+  \( P(x^1, x^2, ..., x^n) = \int N(y \mid 0,\Phi_b)N(x^1 \mid y,\Phi_w)...N(x^n \mid y,\Phi_w) dy\) here is lower case "n" 
+  
 
   You can solve the integral:
 
@@ -280,9 +297,9 @@
 
   Aqui eh mais restritivo pois nao pode ter ZEROS
 
-  Oq eh uma matrix ser poisitive semi-definite? 
+  What is semi-positive definite matrix? 
   
-  $M$ is said positive defnite if $zMz^T$ is positive or ZERO scalar for no
+  $M$ is said positive definite if $zMz^T$ is positive or ZERO scalar for no
   zeros columns in $z$. $z$ is a vector fo real number
   
   Whithout the 2 constraint above, simple calculation would result:
@@ -333,10 +350,9 @@
   :INTERLEAVE_PDF: Ioffe2006PLDA.pdf
   :END:
 
-  Discussao da performance do algoritmo vs o numero de classes
-  (individuos) na base de dados.
+  Discussion about the performance of the algorithm vs the number of classes in
+  the the database
 
-  Oq acontece se ao invez de tiver 100 speaker eu tiver 100k speakers?
+  What happened if instead of have 100 invidious I have 100k>
 
-  Eh mais idendificar speaker numa base de 100 do que de 100k, certo?
-
+  It is easier to do face recognition in a db of 100 than 100k.
