@@ -12,11 +12,11 @@
 
   See notebook: [[file:intor_pca.ipynb][PCA]]
 
-* Intro to Probabilistic LDA
-
-  *WIP*
-
+* Intro to PLDA
+  
+  See the notebook: [[file:intro_plda.ipynb][PLDA]]
+  
 * Intro to t_SNE
 
-*TODO*
+  *TODO*
 
