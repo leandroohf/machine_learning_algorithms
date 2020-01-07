@@ -1,10 +1,10 @@
 
  [[https://mybinder.org/v2/gh/leandroohf/LDA.git/master][https://mybinder.org/badge_logo.svg]]
 
-* Explanation about GMM and EM algorithm
+ These are my notes and implementations of some machine learning algorithms.  
 
-  These are my notes about Gaussian Mixture Models and EM. 
-
+* Intro to GMM and EM algorithm
+  
   Please, visit notebook:  [[file:intro_gmm_n_em.ipynb][Gaussian Mixture Models]]
 
   refs:
