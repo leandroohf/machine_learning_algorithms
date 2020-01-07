@@ -40,7 +40,6 @@
 
    http://danielnee.com/tag/reliability-diagram/
 
-
 * Intro to Fishers LDA
 
   See notebook: [[file:intro_fishers_lda.ipynb][Fisher LDA]]
