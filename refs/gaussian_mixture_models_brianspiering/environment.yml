@@ -1,0 +1,17 @@
+# Create environment:
+# $ conda env create --force
+name: gmm
+channels:
+  - conda-forge
+dependencies:
+  - python = 3.6
+  - ipython
+  - jupyter
+  - scipy
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+    
+# Start environment:
+# $ source activate gmm
