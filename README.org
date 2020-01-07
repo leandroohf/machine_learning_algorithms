@@ -5,7 +5,11 @@
 
   These are my notes about Gaussian Mixture Models and EM. 
 
+<<<<<<< HEAD
   Please, visit notebook:  [[file:intro_gmm_n_em.ipynb][Gaussian Mixture Models]]
+=======
+  Please, visit notebook:  [[file:.//intro_to_gmm_n_em.ipynb][Gaussian Mixture Models]] 
+>>>>>>> 49ee204b138e02323f51071d1e15da6048c4aa7a
 
   refs:
   1. https://github.com/llSourcell/Gaussian_Mixture_Models
