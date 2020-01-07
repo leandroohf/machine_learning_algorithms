@@ -16,6 +16,31 @@
   See video: 
   1. https://www.youtube.com/watch?v=JNlEIEwe-Cg
 
+* Intro Calibration curve
+  
+  The score you get from a binary classifier (that outputs a number between
+  0 and 1.0 is not necessarily a well-calibrated probability. Even some
+  models that provide a method that return the predicted probability can
+  give you poor estimates of the class probabilities. The tools utilized to
+  calibrate a model are sometimes called calibration curve (Python) and
+  other, reliability diagrams (R).
+
+  See:
+    
+  [[file:intro_calibration_curve.ipynb]]
+
+  
+** refs
+
+   https://scikit-learn.org/stable/auto_examples/calibration/plot_calibration.html
+
+   http://queirozf.com/entries/introduction-to-auc-and-calibrated-models-with-examples-using-scikit-learn
+   
+   https://machinelearningmastery.com/calibrated-classification-model-in-scikit-learn/
+
+   http://danielnee.com/tag/reliability-diagram/
+
+
 * Intro to Fishers LDA
 
   See notebook: [[file:intro_fishers_lda.ipynb][Fisher LDA]]
