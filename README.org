@@ -1,6 +1,21 @@
 
  [[https://mybinder.org/v2/gh/leandroohf/LDA.git/master][https://mybinder.org/badge_logo.svg]]
 
+* Explanation about GMM and EM algorithm
+
+  These are my notes about Gaussian Mixture Models and EM. 
+
+  Please, visit notebook:  [[file:.//intro_to_gmm_n_em.ipynb][Gaussian Mixture Models]] 
+
+  refs:
+  1. https://github.com/llSourcell/Gaussian_Mixture_Models
+  2. https://github.com/brianspiering/gaussian_mixture_models
+  3. https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html
+  4. https://github.com/jakevdp/PythonDataScienceHandbook
+     
+  See video: 
+  1. https://www.youtube.com/watch?v=JNlEIEwe-Cg
+
 * Intro to Fishers LDA
 
   See notebook: [[file:intro_fishers_lda.ipynb][Fisher LDA]]
@@ -20,18 +35,4 @@
 * Intro to t_SNE
 
   *TODO*
-
-* Explanation about GMM and EM algorithm
-
-  These are my notes about Gaussian Mixture Models and EM.
-  Please, visit notebook:  [[file:.//intro_to_gmm_n_em.ipynb][Gaussian Mixture Models]]
-
-  refs:
-  1. https://github.com/llSourcell/Gaussian_Mixture_Models
-  2. https://github.com/brianspiering/gaussian_mixture_models
-  3. https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html
-  4. https://github.com/jakevdp/PythonDataScienceHandbook
-     
-  See video: 
-  1. https://www.youtube.com/watch?v=JNlEIEwe-Cg
 
