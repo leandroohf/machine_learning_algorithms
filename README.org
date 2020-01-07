@@ -61,3 +61,6 @@
 
   *TODO*
 
+* Notes about learning curve and deep learning
+
+  See [[file:deep_learning_notes.ipynb][Deep Learning]]
