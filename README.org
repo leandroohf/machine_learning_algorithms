@@ -24,7 +24,7 @@
 * Explanation about GMM and EM algorithm
 
   These are my notes about Gaussian Mixture Models and EM.
-  Please, visit notebook:  [[file:.//intro_to_gmm_&_em.ipynb][Gaussian Mixture Models]]
+  Please, visit notebook:  [[file:.//intro_to_gmm_n_em.ipynb][Gaussian Mixture Models]]
 
   refs:
   1. https://github.com/llSourcell/Gaussian_Mixture_Models
