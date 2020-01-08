@@ -63,3 +63,6 @@
 * Notes about learning curve and deep learning
 
   See [[file:deep_learning_notes.ipynb][Deep Learning]]
+* Intro to LSTM Unit (Deep Learning Architecture)
+
+  See [[file:intro_lstm_unit.ipynb][LSTM]]
