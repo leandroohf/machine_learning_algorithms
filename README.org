@@ -18,18 +18,17 @@
 
 * Intro Calibration curve
   
-  The score you get from a binary classifier (that outputs a number between
-  0 and 1.0 is not necessarily a well-calibrated probability. Even some
-  models that provide a method that return the predicted probability can
-  give you poor estimates of the class probabilities. The tools utilized to
-  calibrate a model are sometimes called calibration curve (Python) and
-  other, reliability diagrams (R).
+  The score you get from a binary classifier (that outputs a number between 0
+  and 1.0 is not necessarily a well-calibrated probability. Even some models
+  that provide a method that return the predicted probability can give you poor
+  estimates of the class probabilities. The tools utilized to calibrate a model
+  are sometimes called calibration curve (Python) or reliability diagrams (R).
 
   See:
     
   [[file:intro_calibration_curve.ipynb]]
 
-  
+
 ** refs
 
    https://scikit-learn.org/stable/auto_examples/calibration/plot_calibration.html
@@ -60,9 +59,9 @@
 
   *TODO*
 
-* Notes about learning curve and deep learning
-
-  See [[file:deep_learning_notes.ipynb][Deep Learning]]
 * Intro to LSTM Unit (Deep Learning Architecture)
 
   See [[file:intro_lstm_unit.ipynb][LSTM]]
+* Notes about learning curve and deep learning
+
+  See [[file:deep_learning_notes.ipynb][Deep Learning]]
