@@ -49,7 +49,7 @@
 
 * Intro to PCA
 
-  See notebook: [[file:intor_pca.ipynb][PCA]]
+  See notebook: [[file:intro_pca.ipynb][PCA]]
 
 * Intro to PLDA
   
