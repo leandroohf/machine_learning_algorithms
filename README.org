@@ -28,7 +28,6 @@
     
   [[file:intro_calibration_curve.ipynb]]
 
-
 ** refs
 
    https://scikit-learn.org/stable/auto_examples/calibration/plot_calibration.html
@@ -62,6 +61,7 @@
 * Intro to LSTM Unit (Deep Learning Architecture)
 
   See [[file:intro_lstm_unit.ipynb][LSTM]]
+
 * Notes about learning curve and deep learning
 
   See [[file:deep_learning_notes.ipynb][Deep Learning]]
