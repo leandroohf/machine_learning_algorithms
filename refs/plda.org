@@ -19,7 +19,7 @@
    Supervised learning algorithm
 
    Main motivations. 
-   * PLDA automatic set set dimension with less importance with low
+   * PLDA automatic set dimension with less importance with low
      probabilities
    * Can be used to do classification with unseen classes (Train with
      class apple, orange n grape and latter on you decide to add the
