@@ -3,6 +3,10 @@
 
  These are my notes and implementations of some machine learning algorithms.  
 
+* Intro to Gradient Descent
+
+  See notebook: [[intro_gradient_algos.ipynb]]
+  
 * Intro to KNN
 
   See notebook: [[intro_KNN.ipynb]]
