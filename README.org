@@ -1,7 +1,7 @@
 
  [[https://mybinder.org/v2/gh/leandroohf/LDA.git/master][https://mybinder.org/badge_logo.svg]]
 
- These are my notes and implementations of some machine learning algorithms.  
+ These are my notes and implementations of some machine learning algorithms.
 
 * Intro to Gradient Descent
 
