@@ -6,7 +6,11 @@
 * Intro to Gradient Descent
 
   See notebook: [[intro_gradient_algos.ipynb]]
-  
+
+* Intro to GANS
+
+ See notebook: [[intro_gans.ipynb]]
+
 * Intro to KNN
 
   See notebook: [[intro_KNN.ipynb]]
