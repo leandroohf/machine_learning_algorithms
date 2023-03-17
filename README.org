@@ -7,13 +7,13 @@
 
   See notebook: [[intro_gradient_algos.ipynb]]
 
-* Intro to Batchnormalization
-
- See notebook: [[intro_batchnormalization.ipynb]]
-
 * Intro to GANS
 
  See notebook: [[intro_gans.ipynb]]
+
+* Intro to Batchnormalization
+
+ See notebook: [[intro_batchnormalization.ipynb]]
 
 * Intro to KNN
 
