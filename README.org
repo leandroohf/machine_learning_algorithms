@@ -15,6 +15,10 @@
 
  See notebook: [[intro_batch_normalization.ipynb]]
 
+* Intro to High Quality Prediction Interval
+
+   See notebook: [[intro_to_prediction_interval.ipynb]]
+
 * Intro to KNN
 
   See notebook: [[intro_KNN.ipynb]]
@@ -22,9 +26,9 @@
 * Intro to K-means
 
   TODO:
-  
+
 * Intro to GMM and EM algorithm
-  
+
   Please, visit notebook:  [[file:intro_gmm_n_em.ipynb][Gaussian Mixture Models]]
 
   refs:
@@ -37,7 +41,7 @@
   1. https://www.youtube.com/watch?v=JNlEIEwe-Cg
 
 * Intro Calibration curve
-  
+
   The score you get from a binary classifier (that outputs a number between 0
   and 1.0 is not necessarily a well-calibrated probability. Even some models
   that provide a method that return the predicted probability can give you poor
