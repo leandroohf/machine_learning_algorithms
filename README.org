@@ -19,6 +19,10 @@
 
    See notebook: [[intro_to_prediction_interval.ipynb]]
 
+* Intro two towers DNN (for recommendation systems)
+
+  See notebook: [[intro_two_towers_dnn.ipynb]]
+
 * Intro to KNN
 
   See notebook: [[intro_KNN.ipynb]]
